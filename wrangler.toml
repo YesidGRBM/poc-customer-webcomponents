@@ -1,0 +1,11 @@
+name = "poc-consumer-webcomponents"
+compatibility_date = "2024-01-01"
+
+[build]
+command = "npm run build" # Your Vue build command
+[build.upload]
+dir = "dist" # Your Vue build output directory
+
+[pages]
+# For Single Page Applications (SPAs) like Vue
+not_found_handling = "single_page_application"
