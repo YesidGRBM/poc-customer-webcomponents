@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-
 const loading = ref(false)
-const error = ref<string|undefined>(undefined)
+const error = ref<string | undefined>(undefined)
 
 const webcomponents = ref(['lit', 'react', 'stencil', 'svelte', 'vue'])
-
 
 const loader = (path: string) => {
   loading.value = true;
@@ -30,29 +28,34 @@ const loader = (path: string) => {
   document.body.appendChild(component);
 }
 
-const addStyleSheet = () => {
-  const sheet = document.createElement('link')
-  sheet.type = 'text/css'
-  sheet.rel = 'stylesheet'
-  sheet.href = 'https://pub-d76b263501ba4f559a765fe05f6e4b2b.r2.dev/css/style.css'
-  document.head.appendChild(sheet)
-}
 </script>
 
 <template>
   <Teleport to="body">
-    <div v-if="loading" class="over">
-      <div class="modal">
-        Cargando el script.
-      </div>
-    </div>
+    <dialog v-if="loading" open>
+      <article>
+        <p>
+          Cargando el script.
+        </p>
+      </article>
+    </dialog>
   </Teleport>
-  <button @click="addStyleSheet">Agregar hoja de estilos</button>
-  <ul>
-    <li v-for="webcomponent in webcomponents" :key="webcomponent">
-      <button @click="loader(webcomponent)">
-        {{ webcomponent }}
-      </button>
-    </li>
-  </ul>
+  <header>
+    <button v-for="webcomponent in webcomponents" :key="webcomponent" class="outline" @click="loader(webcomponent)">
+      {{ webcomponent }}
+    </button>
+  </header>
 </template>
+
+<style scoped>
+  header {
+    display: flex;
+    width: fit-content;
+    margin: auto;
+    gap: 1rem;
+  }
+
+  button {
+    flex: 1;
+  }
+</style>
